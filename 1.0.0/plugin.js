@@ -82,6 +82,10 @@
 					{
 						//bottom
 						self.moveDown();
+					}else if(event.keyCode==13)
+					{
+						//bottom
+						self.comfirm();
 					}
 				});
 
@@ -111,14 +115,14 @@
 			};
 			self.comfirm=function()
 			{
-				self.trigger("qdropdownselect.change",self.selectedItem.date("qvalue"));
+				target.trigger("qdropdownselect.change",self.selectedItem.data("qvalue"));
 			};
 			self.moveDown=function(){
 				console.log(self.selectedItem);
 				if(self.selectedItem!=null)
 				{
 					console.log("qvalue:"+self.selectedItem.data("qvalue"));
-					var v=self.selectedItem.remove("active").next();
+					var v=self.selectedItem.removeClass("active").next();
 					if(v.length>0)
 					{
 						self.selectedItem=v.addClass("active");
@@ -141,7 +145,7 @@
 				if(self.selectedItem!=null)
 				{
 					console.log("qvalue:"+self.selectedItem.data("qvalue"));
-					var v=self.selectedItem.remove("active").prev();
+					var v=self.selectedItem.removeClass("active").prev();
 					if(v.length>0)
 					{
 						self.selectedItem=v.addClass("active");
