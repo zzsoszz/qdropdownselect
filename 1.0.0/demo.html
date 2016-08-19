@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="description" content="延时提示2">
+	<meta charset="UTF-8">
+	<title>Document</title>.
+  <link rel="stylesheet" href="plugin.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <script src="plugin.js"></script>
+  <script>
+  	
+  	$(document).ready(function(){
+  		
+  	   $("#username").qdropdownselect({dropDownSelectEle:$("#qdropdownselect")});
+       $("#username").on("qdropdownselect.change",function(val){
+          console.log("qdropdownselect.change:"+val);
+       });
+       
+  	});
+
+  </script>
+
+
+</head>
+<body>
+
+
+<input id="username" >
+
+
+<div class="qdropdownselect" id="qdropdownselect" style="display:none">
+    <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+</div>
+
+
+</body>
+</html>
