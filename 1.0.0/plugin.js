@@ -52,6 +52,8 @@
 		function PluginObject(target)
 		{
 			self=this;
+			self.firstItem;
+			self.lastItem;
 			self.selectedItem;
 			self.dropDownSelectEle;
 			self.init=function(optionsnew)
@@ -60,11 +62,14 @@
 				self.dropDownSelectEle.css({
 									'position':'absolute',
 									'width':target.outerWidth()+'px',
-									'height':target.outerHeight()+'px',
 									'top':target.offset().top+target.outerHeight()+"px",
-									'left':target.offset().left+"px"
+									'left':target.offset().left+"px",
+									'box-sizing':'border-box'
 				});
 				$("body").append(self.dropDownSelectEle);
+				self.firstItem=self.dropDownSelectEle.find(".qitem").first();
+				self.lastItem=self.dropDownSelectEle.find(".qitem").last();
+				var resizeTimer;
 				$(document).on("keydown",function(event){
 					event.preventDefault();
 					console.log(event.keyCode);
@@ -74,36 +79,59 @@
 					}else if(event.keyCode==38)
 					{
 						//top
-						self.moveUp();
+					   
+					   if(resizeTimer){
+						   clearTimeout(resizeTimer)
+					   }
+					   resizeTimer=setTimeout(function(){
+						  self.moveUp();
+					   },100);
+
 					}else if(event.keyCode==39)
 					{
 						//right
 					}else if(event.keyCode==40)
 					{
 						//bottom
-						self.moveDown();
+					   if(resizeTimer){
+						   clearTimeout(resizeTimer)
+					   }
+					   resizeTimer=setTimeout(function(){
+						  self.moveDown();
+					   },100);
 					}else if(event.keyCode==13)
 					{
 						//bottom
 						self.comfirm();
 					}
 				});
-
 				target.on("click",function(event){
 					event.preventDefault();
 				});
-
 				target.on("focus",function(event){
 					self.dropDownSelectEle.show();
 				});
-
 				$(document).on("click",function(event){
 					if(event.target!=target.get(0) && $(event.target).closest(self.dropDownSelectEle).length  < 1) 
 					{
 						  self.dropDownSelectEle.hide();
 					}
 				});
-
+				self.dropDownSelectEle.on("click",function(event){
+					var v=$(event.target).closest(".qitem");
+					if(v.length > 0) 
+					{
+						  self.setSelected(v);
+						  self.comfirm();
+					}
+				});
+				/*
+				$(document).bind('mousewheel', function(event, delta) {
+					var dir = delta > 0 ? 'Up' : 'Down';
+					console.log(dir);
+					return false;
+				});
+				*/
 			};
 			self.hide=function()
 			{
@@ -113,53 +141,39 @@
 			{
 				self.dropDownSelectEle.show();
 			};
+			self.setSelected=function(qitemele)
+			{
+				if(self.selectedItem!=null)
+				{
+					self.selectedItem.removeClass("active");
+				}
+				if(qitemele.length>0)
+				{
+					self.selectedItem=qitemele.addClass("active");
+				}else{
+					self.selectedItem=null;
+				}
+			};
 			self.comfirm=function()
 			{
 				target.trigger("qdropdownselect.change",self.selectedItem.data("qvalue"));
+				self.hide();
 			};
 			self.moveDown=function(){
-				console.log(self.selectedItem);
-				if(self.selectedItem!=null)
+				if(self.selectedItem==null)
 				{
-					console.log("qvalue:"+self.selectedItem.data("qvalue"));
-					var v=self.selectedItem.removeClass("active").next();
-					if(v.length>0)
-					{
-						self.selectedItem=v.addClass("active");
-					}else{
-						self.selectedItem=null;
-					}
+					self.setSelected(self.firstItem);
 				}else{
-					var v= self.dropDownSelectEle.find(".qitem").first().addClass("active");
-					if(v.length>0)
-					{
-						self.selectedItem=v;
-					}else{
-						self.selectedItem=null;
-					}
+					self.setSelected(self.selectedItem.next());
 				}
 			};
 			self.moveUp=function()
 			{
-				console.log(self.selectedItem);
-				if(self.selectedItem!=null)
+				if(self.selectedItem==null)
 				{
-					console.log("qvalue:"+self.selectedItem.data("qvalue"));
-					var v=self.selectedItem.removeClass("active").prev();
-					if(v.length>0)
-					{
-						self.selectedItem=v.addClass("active");
-					}else{
-						self.selectedItem=null;
-					}
+					self.setSelected(self.lastItem);
 				}else{
-					var v=self.selectedItem=self.dropDownSelectEle.find(".qitem").last().addClass("active");
-					if(v.length>0)
-					{
-						self.selectedItem=v;
-					}else{
-						self.selectedItem=null;
-					}
+					self.setSelected(self.selectedItem.prev());
 				}
 			};
 		}

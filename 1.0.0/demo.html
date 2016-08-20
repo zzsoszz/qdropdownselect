@@ -12,8 +12,8 @@
   	$(document).ready(function(){
   		
   	   $("#username").qdropdownselect({dropDownSelectEle:$("#qdropdownselect")});
-       $("#username").on("qdropdownselect.change",function(val){
-          console.log("qdropdownselect.change:"+val);
+       $("#username").on("qdropdownselect.change",function(event,val){
+           $("#username").val(val);
        });
        
   	});
@@ -23,6 +23,16 @@
 <style>
   .active{
     background:blue;
+  }
+  .qdropdownselect{
+	background:#ffffff;
+	border: 1px solid #ccc;
+	line-height:20px;
+	height:300px;
+	overflow:scroll;
+  }
+  .qdropdownselect .qitem:hover{
+	background:#999999;
   }
 </style>
 </head>
@@ -34,6 +44,66 @@
 
 <div class="qdropdownselect" id="qdropdownselect" style="display:none">
     <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+	    <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+	    <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+	    <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+	    <div class="qitem"  data-qvalue="1">
+      1
+    </div>
+    <div class="qitem"  data-qvalue="2">
+      2
+    </div>
+    <div class="qitem"  data-qvalue="3">
+      3
+    </div>
+    <div class="qitem"  data-qvalue="4">
+      4
+    </div>
+	 <div class="qitem"  data-qvalue="1">
       1
     </div>
     <div class="qitem"  data-qvalue="2">
