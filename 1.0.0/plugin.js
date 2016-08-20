@@ -59,9 +59,9 @@
 				self.dropDownSelectEle=optionsnew.dropDownSelectEle.clone();
 				self.dropDownSelectEle.css({
 									'position':'absolute',
-									'width':target.width()+'px',
-									'height':target.height()+'px',
-									'top':target.offset().top+target.height()+"px",
+									'width':target.outerWidth()+'px',
+									'height':target.outerHeight()+'px',
+									'top':target.offset().top+target.outerHeight()+"px",
 									'left':target.offset().left+"px"
 				});
 				$("body").append(self.dropDownSelectEle);
