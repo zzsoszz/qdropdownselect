@@ -229,10 +229,13 @@ if(angular && angular.module)
 		        restrict: 'A',
 		        priority: 100,
 		        link: function(scope, element, attrs) {
+
 		        	element.qdropdownselect({dropDownSelectEle:$(".qdropdownselectTemp")});
 		        	element.on("qdropdownselect.change",function(event,val){
 			          element.val(val);
 			          //attrs.$set('ngModel',val);
+			          //attrs['ngModel'] 属性的名字
+			          //attrs['ngModel'] 属性的的值
 			          $scope[attrs['ngModel']]=val;
 			        });
 			        console.log("ngMoel",attrs);
@@ -241,6 +244,7 @@ if(angular && angular.module)
 				     　　console.log('ngModel has changed value to ' + value);
 				     	 element.qdropdownselect("setValue",""+value);
 				 　 });
+				 	
 		        }
 		    };
 		}]
