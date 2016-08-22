@@ -216,3 +216,39 @@
 		*/
 
 })(jQuery);
+
+
+
+if(angular && angular.module)
+{
+	
+	var qui=angular.module("qui",[]);
+	//angular.element("body>div.ng-scope").scope().username
+	qui.directive('qdropdownselect',[function() {
+	    return {
+		        restrict: 'A',
+		        priority: 100,
+		        link: function(scope, element, attrs) {
+		        	element.qdropdownselect({dropDownSelectEle:$(".qdropdownselectTemp")});
+		        	element.on("qdropdownselect.change",function(event,val){
+			          element.val(val);
+			          //attrs.$set('ngModel',val);
+			          $scope[attrs['ngModel']]=val;
+			        });
+			        console.log("ngMoel",attrs);
+				 　　// observe changes to interpolated attribute
+				 　 attrs.$observe('ngModel', function(value) {
+				     　　console.log('ngModel has changed value to ' + value);
+				     	 element.qdropdownselect("setValue",""+value);
+				 　 });
+		        }
+		    };
+		}]
+	);
+
+	
+}
+
+
+
+

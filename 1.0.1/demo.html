@@ -12,6 +12,7 @@
   	
   	$(document).ready(function(){
   		 
+       /*
   	   $("#username").qdropdownselect({dropDownSelectEle:$(".qdropdownselectTemp")});
        $("#username").on("qdropdownselect.change",function(event,val){
            $("#username").val(val);
@@ -22,10 +23,15 @@
            $("#username2").val(val);
        });
        $("#username2").qdropdownselect("setValue",4);
-       
+       */
 
   	});
 
+    var mainApp=angular.module("mainApp",["qui"]);
+    mainApp.controller("mainController", function ($rootScope,$http,$location,$scope) {
+      $scope.username;
+      $scope.password;
+    });
   </script>
 
 <style>
@@ -33,23 +39,23 @@
     background:blue;
   }
   .qdropdownselect{
-	background:#ffffff;
-	border: 1px solid #ccc;
-	line-height:20px;
-	height:300px;
-	overflow:scroll;
+  	background:#ffffff;
+  	border: 1px solid #ccc;
+  	line-height:20px;
+  	height:300px;
+  	overflow:scroll;
   }
   .qdropdownselect .qitem:hover{
-	background:#999999;
+	 background:#999999;
   }
 </style>
 </head>
-<body ng-app="">
+<body ng-app="mainApp">
 
+<div ng-controller="mainController">
 
-<input id="username"  autocomplete="off" qdropdownselect />
-<input id="username2"  autocomplete="off" qdropdownselect />
-
+<input id="username"  autocomplete="off" qdropdownselect   ng-model="username"/>
+<input id="password"  autocomplete="off" qdropdownselect   ng-model="password"/>
 
 <div class="qdropdownselect qdropdownselectTemp"  style="display:none">
     <div class="qitem"  data-qvalue="1">
@@ -125,6 +131,9 @@
       4
     </div>
 </div>
+
+
+
 
 
 </body>
