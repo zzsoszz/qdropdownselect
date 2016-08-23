@@ -63,14 +63,16 @@
 									'top':target.offset().top+target.outerHeight()+"px",
 									'left':target.offset().left+"px",
 									'box-sizing':'border-box'
-				}).attr("id",target.attr("id")+"Qdropdownselect");
+				}).attr("id",$.guid+"Qdropdownselect");
+				//target.attr("id")  jQuery.guid
+				//console.log("guid:",$.guid);
 				$("body").append(this.dropDownSelectEle);
 				this.firstItem=this.dropDownSelectEle.find(".qitem").first();
 				this.lastItem=this.dropDownSelectEle.find(".qitem").last();
 				var resizeTimer;
 				$(document).on("keydown",function(event){
 					event.preventDefault();
-					console.log(event.keyCode);
+					//console.log(event.keyCode);
 					if(event.keyCode==37)
 					{
 						//left
@@ -105,7 +107,7 @@
 				});
 				target.on("click",$.proxy(function(event){
 					event.preventDefault();
-					console.log("show",this.dropDownSelectEle.attr("id"));
+					//console.log("show",this.dropDownSelectEle.attr("id"));
 					this.dropDownSelectEle.show();
 				},this));
 				/*
@@ -114,10 +116,10 @@
 				});
 				*/
 				$(document).on("click",$.proxy(function(event){
-					console.log("click",event.target.id);
+					//console.log("click",event.target.id);
 					if(event.target!=target.get(0) && $(event.target).closest(this.dropDownSelectEle).length  < 1) 
 					{
-						  console.log("hide",this.dropDownSelectEle.attr("id"));
+						  //console.log("hide",this.dropDownSelectEle.attr("id"));
 						  this.dropDownSelectEle.hide();
 					}
 				},this));
@@ -236,7 +238,7 @@ if(angular && angular.module)
 			          //attrs['ngModel'] 属性的的值
 			          scope[attrs['ngModel']]=val;
 			        });
-			        console.log("ngMoel",attrs);
+			        //console.log("ngMoel",attrs);
 				 　　// observe changes to interpolated attribute
 				 　 attrs.$observe('ngModel', function(value) {
 				     　　console.log('ngModel has changed value to ' + value);
