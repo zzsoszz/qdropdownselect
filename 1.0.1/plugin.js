@@ -50,24 +50,23 @@
 
 		function PluginObject(target)
 		{
-			self=this;
-			self.firstItem;
-			self.lastItem;
-			self.selectedItem;
-			self.dropDownSelectEle;
-			self.init=function(optionsnew)
+			this.firstItem;
+			this.lastItem;
+			this.selectedItem;
+			this.dropDownSelectEle;
+			this.init=function(optionsnew)
 			{
-				self.dropDownSelectEle=optionsnew.dropDownSelectEle.clone().removeClass("qdropdownselectTemp");
-				self.dropDownSelectEle.css({
+				this.dropDownSelectEle=optionsnew.dropDownSelectEle.clone().removeClass("qdropdownselectTemp");
+				this.dropDownSelectEle.css({
 									'position':'absolute',
 									'width':target.outerWidth()+'px',
 									'top':target.offset().top+target.outerHeight()+"px",
 									'left':target.offset().left+"px",
 									'box-sizing':'border-box'
 				}).attr("id",target.attr("id")+"Qdropdownselect");
-				$("body").append(self.dropDownSelectEle);
-				self.firstItem=self.dropDownSelectEle.find(".qitem").first();
-				self.lastItem=self.dropDownSelectEle.find(".qitem").last();
+				$("body").append(this.dropDownSelectEle);
+				this.firstItem=this.dropDownSelectEle.find(".qitem").first();
+				this.lastItem=this.dropDownSelectEle.find(".qitem").last();
 				var resizeTimer;
 				$(document).on("keydown",function(event){
 					event.preventDefault();
@@ -83,7 +82,7 @@
 						   clearTimeout(resizeTimer)
 					   }
 					   resizeTimer=setTimeout(function(){
-						  self.moveUp();
+						  this.moveUp();
 					   },100);
 
 					}else if(event.keyCode==39)
@@ -96,12 +95,12 @@
 						   clearTimeout(resizeTimer)
 					   }
 					   resizeTimer=setTimeout(function(){
-						  self.moveDown();
+						  this.moveDown();
 					   },100);
 					}else if(event.keyCode==13)
 					{
 						//bottom
-						self.comfirm();
+						this.comfirm();
 					}
 				});
 				target.on("click",$.proxy(function(event){
@@ -116,13 +115,13 @@
 				*/
 				$(document).on("click",$.proxy(function(event){
 					console.log("click",event.target.id);
-					if(event.target!=target.get(0) && $(event.target).closest(self.dropDownSelectEle).length  < 1) 
+					if(event.target!=target.get(0) && $(event.target).closest(this.dropDownSelectEle).length  < 1) 
 					{
 						  console.log("hide",this.dropDownSelectEle.attr("id"));
 						  this.dropDownSelectEle.hide();
 					}
 				},this));
-				self.dropDownSelectEle.on("click",$.proxy(function(event){
+				this.dropDownSelectEle.on("click",$.proxy(function(event){
 					var v=$(event.target).closest(".qitem");
 					if(v.length > 0) 
 					{
@@ -138,30 +137,30 @@
 				});
 				*/
 			};
-			self.hide=function()
+			this.hide=function()
 			{
-				self.dropDownSelectEle.hide();
+				this.dropDownSelectEle.hide();
 			};
-			self.show=function()
+			this.show=function()
 			{
-				self.dropDownSelectEle.show();
+				this.dropDownSelectEle.show();
 			};
-			self.setSelected=function(qitemele)
+			this.setSelected=function(qitemele)
 			{
-				if(self.selectedItem!=null)
+				if(this.selectedItem!=null)
 				{
-					self.selectedItem.removeClass("active");
+					this.selectedItem.removeClass("active");
 				}
 				if(qitemele.length>0)
 				{
-					self.selectedItem=qitemele.addClass("active");
+					this.selectedItem=qitemele.addClass("active");
 				}else{
-					self.selectedItem=null;
+					this.selectedItem=null;
 				}
 			};
-			self.setValue=function(val)
+			this.setValue=function(val)
 			{
-				var result=self.dropDownSelectEle.find(".qitem").filter(function()
+				var result=this.dropDownSelectEle.find(".qitem").filter(function()
 					{
 						if($(this).data("qvalue")==val){
 							return true;
@@ -170,29 +169,29 @@
 				);
 				if(result.length>0)
 				{
-					self.setSelected($(result.get(0)));
+					this.setSelected($(result.get(0)));
 				}
 			};
-			self.comfirm=function()
+			this.comfirm=function()
 			{
-				target.trigger("qdropdownselect.change",self.selectedItem.data("qvalue"));
-				self.hide();
+				target.trigger("qdropdownselect.change",this.selectedItem.data("qvalue"));
+				this.hide();
 			};
-			self.moveDown=function(){
-				if(self.selectedItem==null)
+			this.moveDown=function(){
+				if(this.selectedItem==null)
 				{
-					self.setSelected(self.firstItem);
+					this.setSelected(this.firstItem);
 				}else{
-					self.setSelected(self.selectedItem.next());
+					this.setSelected(this.selectedItem.next());
 				}
 			};
-			self.moveUp=function()
+			this.moveUp=function()
 			{
-				if(self.selectedItem==null)
+				if(this.selectedItem==null)
 				{
-					self.setSelected(self.lastItem);
+					this.setSelected(this.lastItem);
 				}else{
-					self.setSelected(self.selectedItem.prev());
+					this.setSelected(this.selectedItem.prev());
 				}
 			};
 		}
@@ -236,7 +235,7 @@ if(angular && angular.module)
 			          //attrs.$set('ngModel',val);
 			          //attrs['ngModel'] 属性的名字
 			          //attrs['ngModel'] 属性的的值
-			          $scope[attrs['ngModel']]=val;
+			          scope[attrs['ngModel']]=val;
 			        });
 			        console.log("ngMoel",attrs);
 				 　　// observe changes to interpolated attribute
