@@ -228,8 +228,7 @@ if(angular && angular.module)
 		        restrict: 'A',
 		        priority: 100,
 		        link: function(scope, element, attrs) {
-
-		        	element.qdropdownselect({dropDownSelectEle:$(".qdropdownselectTemp")});
+		        	element.qdropdownselect({dropDownSelectEle:$(attrs['qdropdownselecttemp'])});
 		        	element.on("qdropdownselect.change",function(event,val){
 			          element.val(val);
 			          //attrs.$set('ngModel',val);
