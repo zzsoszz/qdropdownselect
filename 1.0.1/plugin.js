@@ -50,6 +50,7 @@
 
 		function PluginObject(target)
 		{
+			this.ele=target;
 			this.firstItem;
 			this.lastItem;
 			this.selectedItem;
@@ -59,65 +60,71 @@
 				this.dropDownSelectEle=optionsnew.dropDownSelectEle.clone().removeClass("qdropdownselectTemp");
 				this.dropDownSelectEle.css({
 									'position':'absolute',
-									'width':target.outerWidth()+'px',
-									'top':target.offset().top+target.outerHeight()+"px",
-									'left':target.offset().left+"px",
+									'width':this.ele.outerWidth()+'px',
+									'top':this.ele.offset().top+this.ele.outerHeight()+"px",
+									'left':this.ele.offset().left+"px",
 									'box-sizing':'border-box'
 				}).attr("id",$.guid+"Qdropdownselect");
-				//target.attr("id")  jQuery.guid
-				//console.log("guid:",$.guid);
+
 				$("body").append(this.dropDownSelectEle);
 				this.firstItem=this.dropDownSelectEle.find(".qitem").first();
 				this.lastItem=this.dropDownSelectEle.find(".qitem").last();
 				var resizeTimer;
-				$(document).on("keydown",function(event){
-					event.preventDefault();
-					//console.log(event.keyCode);
-					if(event.keyCode==37)
-					{
-						//left
-					}else if(event.keyCode==38)
-					{
-						//top
-					   
-					   if(resizeTimer){
-						   clearTimeout(resizeTimer)
-					   }
-					   resizeTimer=setTimeout(function(){
-						  this.moveUp();
-					   },100);
 
-					}else if(event.keyCode==39)
-					{
-						//right
-					}else if(event.keyCode==40)
-					{
-						//bottom
-					   if(resizeTimer){
-						   clearTimeout(resizeTimer)
-					   }
-					   resizeTimer=setTimeout(function(){
-						  this.moveDown();
-					   },100);
-					}else if(event.keyCode==13)
-					{
-						//bottom
-						this.comfirm();
+				$(document).on("keydown",$.proxy(function(event){
+						if(this.ele.get(0)==event.target)
+						{
+							event.preventDefault();
+							if(event.keyCode==37)
+							{
+								//left
+							}else if(event.keyCode==38)
+							{
+								//top
+							   (function(pluginobject)
+									   {
+											if(resizeTimer){
+										   clearTimeout(resizeTimer)
+									   }
+									   resizeTimer=setTimeout(function(){
+										  pluginobject.moveUp();
+									   },100);
+								})(this);
+								
+							}else if(event.keyCode==39)
+							{
+								//right
+							}else if(event.keyCode==40)
+							{
+								//bottom
+								(function(pluginobject)
+									   {
+											if(resizeTimer){
+										   clearTimeout(resizeTimer)
+									   }
+									   resizeTimer=setTimeout(function(){
+										  pluginobject.moveDown();
+									   },100);
+								})(this);
+
+							}else if(event.keyCode==13)
+							{
+								//bottom
+								this.comfirm();
+							}
+						}
 					}
-				});
-				target.on("click",$.proxy(function(event){
+				,this));
+
+				this.ele.on("click",$.proxy(function(event){
 					event.preventDefault();
 					//console.log("show",this.dropDownSelectEle.attr("id"));
 					this.dropDownSelectEle.show();
 				},this));
-				/*
-				target.on("focus",function(event){
-					
-				});
-				*/
+
 				$(document).on("click",$.proxy(function(event){
 					//console.log("click",event.target.id);
-					if(event.target!=target.get(0) && $(event.target).closest(this.dropDownSelectEle).length  < 1) 
+					if(event.target!=this.ele.get(0) && $(event.target).closest(this.dropDownSelectEle).length  < 1) 
 					{
 						  //console.log("hide",this.dropDownSelectEle.attr("id"));
 						  this.dropDownSelectEle.hide();
@@ -176,7 +183,7 @@
 			};
 			this.comfirm=function()
 			{
-				target.trigger("qdropdownselect.change",this.selectedItem.data("qvalue"));
+				this.ele.trigger("qdropdownselect.change",this.selectedItem.data("qvalue"));
 				this.hide();
 			};
 			this.moveDown=function(){
@@ -236,7 +243,11 @@ if(angular && angular.module)
 			          //attrs.$set('ngModel',val);
 			          //attrs['ngModel'] 属性的名字
 			          //attrs['ngModel'] 属性的的值
-			          scope[attrs['ngModel']]=val;
+			         
+			          scope.$apply(function() {
+		                   scope[attrs['ngModel']]=val;
+		              });
+
 			        });
 			        //console.log("ngMoel",attrs);
 				 　　// observe changes to interpolated attribute

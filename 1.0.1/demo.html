@@ -40,13 +40,19 @@
 </head>
 <body ng-app="mainApp">
 
-<div ng-controller="mainController">
+<div ng-controller="mainController" id="mainController">
+
+<div>
+{{username}} {{password}}
+</div>
+
+<input  type="text"  value="{{username}} {{password}} {{sex}} {{birth}}"/>
 
 
-<input id="username"  autocomplete="off" qdropdownselect   ng-model="username"  qdropdownselecttemp=".qdropdownselectTemp" />
-<input id="password"  autocomplete="off" qdropdownselect   ng-model="password" qdropdownselecttemp=".qdropdownselectTemp"/>
-<input id="username"  autocomplete="off" qdropdownselect   ng-model="sex"  qdropdownselecttemp=".qdropdownselectTemp" />
-<input id="password"  autocomplete="off" qdropdownselect   ng-model="birth" qdropdownselecttemp=".qdropdownselectTemp"/>
+<input  autocomplete="off" qdropdownselect   ng-model="username"  qdropdownselecttemp=".qdropdownselectTemp" />
+<input  autocomplete="off" qdropdownselect   ng-model="password" qdropdownselecttemp=".qdropdownselectTemp"/>
+<input  autocomplete="off" qdropdownselect   ng-model="sex"  qdropdownselecttemp=".qdropdownselectTemp" />
+<input  autocomplete="off" qdropdownselect   ng-model="birth" qdropdownselecttemp=".qdropdownselectTemp"/>
 
 
 <div class="qdropdownselect qdropdownselectTemp"  style="display:none">
